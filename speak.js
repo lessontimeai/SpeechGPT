@@ -13,7 +13,7 @@ function addMicrophoneIcon() {
 }
 
 function startSpeechRecognition() {
-  const recognition = new webkitSpeechRecognition() || SpeechRecognition();
+  const recognition = const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
   recognition.lang = "en-US";
 
   recognition.onresult = function (event) {
