@@ -1,16 +1,32 @@
 function addMicrophoneIcon() {
+  // Create a container div for the icon and background
+  const container = document.createElement("div");
+  container.style.position = "fixed";
+  container.style.bottom = "10px";
+  container.style.right = "10px";
+  container.style.background = "#ffffff"; // Background color
+  container.style.padding = "10px"; // Padding for the icon
+  container.style.borderRadius = "50%"; // Make it round
+  container.style.cursor = "pointer"; // Change cursor to pointer
+  container.style.boxShadow = "0px 0px 10px rgba(0, 0, 0, 0.5)"; // Add a shadow
+
+  // Create the microphone icon SVG
   const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
   svg.setAttribute("width", "24");
   svg.setAttribute("height", "24");
-  svg.style.position = "fixed";
-  svg.style.bottom = "10px";
-  svg.style.left = "10px";
   svg.innerHTML = '<path d="M12 2c2.76 0 5 2.24 5 5v7c0 2.76-2.24 5-5 5s-5-2.24-5-5v-7c0-2.76 2.24-5 5-5zM19 10v-1a7 7 0 00-14 0v1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>';
 
-  svg.addEventListener("click", startSpeechRecognition);
+  // Add a click event listener to start speech recognition
+  container.addEventListener("click", startSpeechRecognition);
 
-  document.body.appendChild(svg);
+  // Append the SVG to the container
+  container.appendChild(svg);
+
+  // Append the container to the document body
+  document.body.appendChild(container);
 }
+
+
 
 function startSpeechRecognition() {
   const recognition = const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
