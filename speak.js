@@ -39,40 +39,29 @@ function startSpeechRecognition() {
     const textarea = document.getElementById("prompt-textarea");
     
     // Append the recognized text to the textarea followed by a new line
-    textarea.value += result + '\n';
+    textarea.value += result + ' ';
     
-    // Focus on the textarea
-    textarea.focus();
-    
-    // Send a space key press event
-    const spaceKeyEvent = new KeyboardEvent('keydown', {
-      key: ' ',
-      code: 'Space',
-      keyCode: 32,
-      which: 32,
-      bubbles: true,
-    });
-    textarea.dispatchEvent(spaceKeyEvent);
 
-    // Send a enter key press event
-    const enterKeyEvent = new KeyboardEvent('keydown', {
-      key: ' ',
-      code: 'Enter',
-      keyCode: 13,
-      which: 13,
-      bubbles: true,
-    });
-    textarea.dispatchEvent(spaceKeyEvent);
-    
-    
-    // Trigger an input event to ensure the textarea content is updated
-    const inputEvent = new Event('input', {
-      bubbles: true,
-      cancelable: true,
-    });
-    textarea.dispatchEvent(inputEvent);
-  };
+
+    setTimeout(function (){
+      // Focus on the textarea
+      textarea.focus();
   
+      // Send a space key press event
+      const spaceKeyEvent = new KeyboardEvent('keyup', {
+        key: ' ',
+        code: 'Space',
+        keyCode: 32,
+        which: 32,
+        bubbles: true,
+      });
+      textarea.dispatchEvent(spaceKeyEvent);
+      
+    const button = document.querySelector('button[data-testid="send-button"]');
+    button.click();}, 1000);
+  
+  };
+
   recognition.onerror = function (event) {
     // Handle speech recognition errors
     alert("Speech recognition error: " + event.error);
@@ -81,10 +70,11 @@ function startSpeechRecognition() {
   recognition.start();
   
   // Observe changes in the container's children
-  const container = document.querySelector('.flex.flex-col');
+  container = document.querySelector(".max-w-full");
   const observer = new MutationObserver(function (mutations) {
     mutations.forEach(function (mutation) {
       // Extract and speak the text content of the container
+      console.log("getting...")
       const textContent = container.textContent.trim();
       if (textContent !== "") {
         speakText(textContent);
@@ -95,6 +85,7 @@ function startSpeechRecognition() {
   // Configure the observer to listen for child list changes
   const observerConfig = {
     childList: true,
+    subtree: true
   };
   observer.observe(container, observerConfig);
 }
